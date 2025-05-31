@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const API_KEY = "d565136f";
+const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 const BASE_URL = "http://www.omdbapi.com/";
 
 export const searchMovies = async (query, type = "", page = 1) => {
+  if (!API_KEY) {
+    throw new Error("API key is missing. Please set REACT_APP_OMDB_API_KEY.");
+  }
   try {
     const response = await axios.get(BASE_URL, {
       params: {
